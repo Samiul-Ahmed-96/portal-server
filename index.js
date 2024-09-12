@@ -46,7 +46,7 @@ const upload = multer({ storage });
 // Middlewares
 app.use(
   cors({
-    origin: 'https://portal-unidevgo.netlify.app',
+    origin: '*',
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
