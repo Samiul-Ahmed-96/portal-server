@@ -20,7 +20,7 @@ const setupSocket = async (server) => {
 
   const io = new SocketIOServer(server, {
     cors: {
-      origin: process.env.ORIGIN,
+      origin: 'https://portal-unidevgo.netlify.app',
       methods: ["GET", "POST"],
       credentials: true,
     },
