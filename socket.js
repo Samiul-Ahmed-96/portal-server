@@ -22,7 +22,6 @@ const setupSocket = async (server) => {
     cors: {
       origin: '*',
       methods: ["GET", "POST"],
-      credentials: true,
     },
   });
 
