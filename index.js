@@ -44,13 +44,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Middlewares
-app.use(
-  cors({
-    origin: '*',
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+
+app.use(cors({
+  origin: 'https://portal-unidevgo.netlify.app', // Explicit origin
+  credentials: true, // Ensure credentials are allowed
+}));
+
 app.use(bodyParser.json());
 app.use(express.json());
 
