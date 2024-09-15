@@ -20,7 +20,7 @@ const setupSocket = async (server) => {
 
   const io = new SocketIOServer(server, {
     cors: {
-      origin: 'https://portal-unidevgo.netlify.app', // Explicitly set the origin
+      origin: process.env.ORIGIN, // Explicitly set the origin
       methods: ["GET", "POST"],
       credentials: true, // Make sure credentials are allowed
     },
@@ -66,6 +66,7 @@ const setupSocket = async (server) => {
 
         const newMessage = {
           sender: new ObjectId(message.sender),
+          senderName : message.senderName,
           recipient: message.recipient ? new ObjectId(message.recipient) : null,
           messageType: message.messageType,
           content: message.content || null,
@@ -108,13 +109,11 @@ const setupSocket = async (server) => {
 
     // Call a user
     socket.on("callUser", ({ userToCall, from }) => {
-      console.log("CALL", userToCall, from);
       io.emit("caller", { from });
     });
 
     // Answer the call
     socket.on("answerCall", ({ to, signal }) => {
-      console.log("ANSWER", to, signal);
       io.to(to).emit("callAccepted", signal);
     });
 
