@@ -21,6 +21,7 @@ const setupSocket = async (server) => {
   const io = new SocketIOServer(server, {
     cors: {
       origin: 'https://portal-unidevgo.netlify.app', // Explicitly set the origin
+      // origin: 'http://localhost:5173', // Explicitly set the origin
       methods: ["GET", "POST"],
       credentials: true, // Make sure credentials are allowed
     },
@@ -91,15 +92,19 @@ const setupSocket = async (server) => {
           })
           .sort({ timestamp: 1 })
           .toArray();
+        
+        console.log("updateMessage",updatedMessages);
 
         const recipientSocketId = userSocketMap.get(message.recipient);
         const senderSocketId = userSocketMap.get(message.sender);
 
         if (recipientSocketId) {
+          console.log("recipientSocketId",recipientSocketId);
           io.to(recipientSocketId).emit("receiveMessage", updatedMessages);
         }
 
         if (senderSocketId) {
+          console.log("senderSocketId",senderSocketId);
           io.to(senderSocketId).emit("receiveMessage", updatedMessages);
         }
       } catch (error) {
@@ -108,7 +113,7 @@ const setupSocket = async (server) => {
     });
 
     // Call a user
-    socket.on("callUser", ({ userToCall, from }) => {
+    socket.on("callUser", ({from }) => {
       io.emit("caller", { from });
     });
 
