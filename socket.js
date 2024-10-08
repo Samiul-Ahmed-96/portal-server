@@ -92,8 +92,7 @@ const setupSocket = async (server) => {
           })
           .sort({ timestamp: 1 })
           .toArray();
-        
-        console.log("updateMessage",updatedMessages);
+      
 
         const recipientSocketId = userSocketMap.get(message.recipient);
         const senderSocketId = userSocketMap.get(message.sender);
