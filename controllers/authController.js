@@ -109,3 +109,37 @@ export const loginProfile = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+
+// Update Password
+export const updatePassword = async (req, res) => {
+  const { email, oldPassword, newPassword } = req.body;
+
+  console.log(email,oldPassword,newPassword)
+
+  try {
+    const profileCollection = req.app.locals.db.collection("profiles-management");
+    const user = await profileCollection.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Old password is incorrect" });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    await profileCollection.updateOne(
+      { email },
+      { $set: { password: hashedNewPassword } }
+    );
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};

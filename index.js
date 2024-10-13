@@ -46,7 +46,7 @@ const upload = multer({ storage });
 // Middlewares
 
 app.use(cors({
-  origin: 'https://portal-unidevgo.netlify.app', // Explicit origin
+  origin: 'http://demo.portal.unidevgo.com/', // Explicit origin
   // origin: 'http://localhost:5173', // Explicit origin
   credentials: true, // Ensure credentials are allowed
 }));
@@ -88,5 +88,5 @@ app.post("/chat/upload", upload.single("file"), uploadFileAndSaveMessage);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => {
-  res.send("UnidevGO Server Running");
+  res.send("UnidevGO Portal Server Running");
 });

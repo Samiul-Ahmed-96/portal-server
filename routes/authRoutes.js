@@ -1,7 +1,8 @@
 import express from "express";
 import {
     loginProfile,
-    registerProfile
+    registerProfile,
+    updatePassword
 } from "../controllers/authController.js";
 
 const router = express.Router();
@@ -10,5 +11,7 @@ const router = express.Router();
 router.post("/register", registerProfile);
 //Login route
 router.post("/login", loginProfile);
+//update  password route
+router.post("/update-password", updatePassword);
 
 export default router;
